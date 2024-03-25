@@ -1,0 +1,51 @@
+<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
+<div layout:fragment="content" class="container">
+	<table class="table">
+		<thead class="table-dark">
+			<tr class="text-center">
+				<th>
+				<div class="dropdown">
+				  <button class="btn btn-secondary dropdown-toggle" id="method_status" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" data-method="">전체 학기</button>
+					<ul id="method_type" class="dropdown-menu" role="menu" aria-labelledby="searchType">
+					  <li role="presentation"><a class="dropdown-item" href="?semester=all" value="전체 학기">전체 학기</a></li>
+					  <li><hr class="dropdown-divider"></li>
+					  <li role="presentation"><a class="dropdown-item" href="?semester=1학년 1학기" value="1학년 1학기">1학년 1학기</a></li>
+					  <li role="presentation"><a class="dropdown-item" href="?semester=1학년 2학기" value="1학년 2학기">1학년 2학기</a></li>
+					  <li><hr class="dropdown-divider"></li>
+					  <li role="presentation"><a class="dropdown-item" href="?semester=2학년 1학기" value="2학년 1학기">2학년 1학기</a></li>
+					  <li role="presentation"><a class="dropdown-item" href="?semester=2학년 2학기" value="2학년 2학기">2학년 2학기</a></li>
+					  <li><hr class="dropdown-divider"></li>
+					  <li role="presentation"><a class="dropdown-item" href="?semester=3학년 1학기" value="3학년 1학기">3학년 1학기</a></li>
+					  <li role="presentation"><a class="dropdown-item" href="?semester=3학년 2학기" value="3학년 2학기">3학년 2학기</a></li>
+					  <li><hr class="dropdown-divider"></li>
+					  <li role="presentation"><a class="dropdown-item" href="?semester=4학년 1학기" value="4학년 1학기">4학년 1학기</a></li>
+					  <li role="presentation"><a class="dropdown-item" href="?semester=4학년 2학기" value="4학년 2학기">4학년 2학기</a></li>
+					  <li><hr class="dropdown-divider"></li>
+					  <li role="presentation"><a class="dropdown-item" href="?semester=5학년 1학기" value="5학년 1학기">5학년 1학기</a></li>
+					  <li role="presentation"><a class="dropdown-item" href="?semester=5학년 2학기" value="5학년 2학기">5학년 2학기</a></li>
+					  <li><hr class="dropdown-divider"></li>
+					  <li role="presentation"><a class="dropdown-item" href="?semester=6학년 1학기" value="6학년 1학기">6학년 1학기</a></li>
+					  <li role="presentation"><a class="dropdown-item" href="?semester=6학년 2학기" value="6학년 2학기">6학년 2학기</a></li>
+					</ul>
+				</div>
+				</th>
+				<th>과목명</th>
+				<th>성적</th>
+				<th>학점</th>
+				<th>전공유무</th>
+				<th>교양영역</th>
+			</tr>
+		</thead>
+		<tbody style="text-align: center;">
+			<tr th:each="sugang : ${sugangs}">
+				<td th:text="${sugang.semester}"></td>
+				<td th:text="${sugang.subjectName}"></td>
+				<td th:text="${sugang.grade}"></td>
+				<td th:text="${sugang.credit}"></td>
+				<td th:text="${sugang.subjectType}"></td>
+				<td th:text="${sugang.culture}"></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</html>
