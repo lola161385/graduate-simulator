@@ -15,6 +15,6 @@ public class MainController {//test
 
 	@GetMapping("/")
 	public String root() {
-		return "redirect:/main/hello";
+		return "redirect:/main/hello?semester=all";
 	}
 }
