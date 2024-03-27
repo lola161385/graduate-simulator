@@ -34,11 +34,11 @@
 					<th style="width: 8%">학점</th>
 					<th style="width: 15%">전공유무</th>
 					<th style="width: 15%">교양영역</th>
-					<th style="width: 9%">수정</th>
+					<th style="width: 9%">저장</th>
 				</tr>
 			</thead>
 			<tbody style="text-align: center;">
-				<tr th:each="sugang : ${sugangs}">
+				<tr th:object="${mainForm}">
 					<td style="text-align: center;">
 						<input style="text-align: center; width: 80%;" type="text" name="semester" th:value="${sugang.semester}">
 					</td>
