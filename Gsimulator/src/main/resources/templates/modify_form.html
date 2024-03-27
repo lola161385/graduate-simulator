@@ -41,7 +41,31 @@
 				<tr>
 					<form th:action="@{/main/modify/{id}(id=${sugang.id})}" th:object="${mainForm}" method="post">
 						<td style="text-align: center;">
-							<input style="text-align: center; width: 80%;" type="text" name="semester" th:value="*{semester}">
+							<select class="form-select" name="semester" style="text-align: center;">
+								<option value="1학년 1학기" th:selected="*{semester} == '1학년 1학기'">1학년 1학기</option>
+								<option value="1학년 2학기" th:selected="*{semester} == '1학년 2학기'">1학년 2학기</option>
+								<option value="1학년 계절학기" th:selected="*{semester} == '1학년 계절학기'">1학년 계절학기</option>
+								<li><hr class="dropdown-divider"></li>
+								<option value="2학년 1학기" th:selected="*{semester} == '2학년 1학기'">2학년 1학기</option>
+								<option value="2학년 2학기" th:selected="*{semester} == '2학년 2학기'">2학년 2학기</option>
+								<option value="2학년 계절학기" th:selected="*{semester} == '2학년 계절학기'">2학년 계절학기</option>
+								<li><hr class="dropdown-divider"></li>
+								<option value="3학년 1학기" th:selected="*{semester} == '3학년 1학기'">3학년 1학기</option>
+								<option value="3학년 2학기" th:selected="*{semester} == '3학년 2학기'">3학년 2학기</option>
+								<option value="3학년 계절학기" th:selected="*{semester} == '3학년 계절학기'">3학년 계절학기</option>
+								<li><hr class="dropdown-divider"></li>
+								<option value="4학년 1학기" th:selected="*{semester} == '4학년 1학기'">4학년 1학기</option>
+								<option value="4학년 2학기" th:selected="*{semester} == '4학년 2학기'">4학년 2학기</option>
+								<option value="4학년 계절학기" th:selected="*{semester} == '4학년 계절학기'">4학년 계절학기</option>
+								<li><hr class="dropdown-divider"></li>
+								<option value="5학년 1학기" th:selected="*{semester} == '5학년 1학기'">5학년 1학기</option>
+								<option value="5학년 2학기" th:selected="*{semester} == '5학년 2학기'">5학년 2학기</option>
+								<option value="5학년 계절학기" th:selected="*{semester} == '5학년 계절학기'">5학년 계절학기</option>
+								<li><hr class="dropdown-divider"></li>
+								<option value="6학년 1학기" th:selected="*{semester} == '6학년 1학기'">6학년 1학기</option>
+								<option value="6학년 2학기" th:selected="*{semester} == '6학년 2학기'">6학년 2학기</option>
+								<option value="6학년 계절학기" th:selected="*{semester} == '6학년 계절학기'">6학년 계절학기</option>
+							</select>
 						</td>
 						<td>
 							<input style="text-align: center; width: 90%;" type="text" name="subjectName" th:value="*{subjectName}">
