@@ -1,83 +1,100 @@
 <html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
 <div layout:fragment="content" class="container">
-	<table class="table" style="width: 100%">
-		<thead class="table-dark">
-			<tr class="text-center">
-				<th style="width: 15%">
-				<div class="dropdown">
-				  <button class="btn btn-secondary dropdown-toggle" id="method_status" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" data-method="">전체 학기</button>
-					<ul id="method_type" class="dropdown-menu" role="menu" aria-labelledby="searchType">
-					  <li role="presentation"><a class="dropdown-item" href="?semester=all" value="전체 학기">전체 학기</a></li>
-					  <li><hr class="dropdown-divider"></li>
-					  <li role="presentation"><a class="dropdown-item" href="?semester=1학년 1학기" value="1학년 1학기">1학년 1학기</a></li>
-					  <li role="presentation"><a class="dropdown-item" href="?semester=1학년 2학기" value="1학년 2학기">1학년 2학기</a></li>
-					  <li><hr class="dropdown-divider"></li>
-					  <li role="presentation"><a class="dropdown-item" href="?semester=2학년 1학기" value="2학년 1학기">2학년 1학기</a></li>
-					  <li role="presentation"><a class="dropdown-item" href="?semester=2학년 2학기" value="2학년 2학기">2학년 2학기</a></li>
-					  <li><hr class="dropdown-divider"></li>
-					  <li role="presentation"><a class="dropdown-item" href="?semester=3학년 1학기" value="3학년 1학기">3학년 1학기</a></li>
-					  <li role="presentation"><a class="dropdown-item" href="?semester=3학년 2학기" value="3학년 2학기">3학년 2학기</a></li>
-					  <li><hr class="dropdown-divider"></li>
-					  <li role="presentation"><a class="dropdown-item" href="?semester=4학년 1학기" value="4학년 1학기">4학년 1학기</a></li>
-					  <li role="presentation"><a class="dropdown-item" href="?semester=4학년 2학기" value="4학년 2학기">4학년 2학기</a></li>
-					  <li><hr class="dropdown-divider"></li>
-					  <li role="presentation"><a class="dropdown-item" href="?semester=5학년 1학기" value="5학년 1학기">5학년 1학기</a></li>
-					  <li role="presentation"><a class="dropdown-item" href="?semester=5학년 2학기" value="5학년 2학기">5학년 2학기</a></li>
-					  <li><hr class="dropdown-divider"></li>
-					  <li role="presentation"><a class="dropdown-item" href="?semester=6학년 1학기" value="6학년 1학기">6학년 1학기</a></li>
-					  <li role="presentation"><a class="dropdown-item" href="?semester=6학년 2학기" value="6학년 2학기">6학년 2학기</a></li>
-					</ul>
-				</div>
-				</th>
-				<th style="width: 44%">과목명</th>
-				<th style="width: 8%">성적</th>
-				<th style="width: 8%">학점</th>
-				<th style="width: 10%">전공유무</th>
-				<th style="width: 15%">교양영역</th>
-			</tr>
-		</thead>
-		<tbody style="text-align: center;">
-			<tr th:each="sugang : ${sugangs}">
-				<td style="text-align: center;">
-					<input style="text-align: center; width: 80%;" type="text" th:value="${sugang.semester}">
-				</td>
-				<td>
-					<input style="text-align: center; width: 90%;" type="text" th:value="${sugang.subjectName}">
-				</td>
-				<td>
-				    <select class="form-select" name="grade" style="text-align: center;">
-				        <option value="A+" th:selected="${sugang.grade} == 'A+'">A+</option>
-				        <option value="A0" th:selected="${sugang.grade} == 'A0'">A0</option>
-				        <option value="B+" th:selected="${sugang.grade} == 'B+'">B+</option>
-				        <option value="B0" th:selected="${sugang.grade} == 'B0'">B0</option>
-				        <option value="C+" th:selected="${sugang.grade} == 'C+'">C+</option>
-				        <option value="C0" th:selected="${sugang.grade} == 'C0'">C0</option>
-				        <option value="D+" th:selected="${sugang.grade} == 'D+'">D+</option>
-				        <option value="D0" th:selected="${sugang.grade} == 'D0'">D0</option>
-				        <option value="F"  th:selected="${sugang.grade} == 'F'">F</option>
-				        <option value="P" th:selected="${sugang.grade} == 'P'">P</option>
-				        <option value="NP" th:selected="${sugang.grade} == 'NP'">NP</option>
-				    </select>
-				</td>
-				<td>
-					<input style="text-align: center;" th:value="${sugang.credit}" type="number" id="credit" name="credit" min="0" max="3" step="1">
-				</td>
-				<td>
-				    <select class="form-select" name="subjectType" style="text-align: center;">
-				        <option value="채플" th:selected="${sugang.subjectType} == '채플'">채플</option>
-				        <option value="전공 필수" th:selected="${sugang.subjectType} == 'true'">전공 필수</option>
-				        <option value="전공 선택" th:selected="${sugang.subjectType} == '전공 선택'">전공 선택</option>
-				        <option value="교양 필수" th:selected="${sugang.subjectType} == '교양 필수'">교양 필수</option>
-				        <option value="교양 선택" th:selected="${sugang.subjectType} == '교양 선택'">교양 선택</option>
-				        <option value="일반 선택" th:selected="${sugang.subjectType} == '일반 선택'">일반 선택</option>
-				        <option value="부전공 필수" th:selected="${sugang.subjectType} == '부전공 필수'">부전공 필수</option>
-				        <option value="부전공 선택" th:selected="${sugang.subjectType} == '부전공 선택'">부전공 선택</option>
-				        <option value="복수전공 필수" th:selected="${sugang.subjectType} == '복수전공 필수'">복수전공 필수</option>
-				        <option value="복수전공 선택"  th:selected="${sugang.subjectType} == '복수전공 선택'">복수전공 선택</option>
-				        <option value="NULL"  th:selected="${sugang.subjectType} == 'false'"></option>
-				    </select>
-				</td>
-				<td th:text="${sugang.culture}"></td>
+		<table class="table" style="width: 100%">
+			<thead class="table-dark">
+				<tr class="text-center">
+					<th style="width: 15%">
+					<div class="dropdown">
+					<button class="btn btn-secondary dropdown-toggle" id="method_status" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" data-method="">전체 학기</button>
+						<ul id="method_type" class="dropdown-menu" role="menu" aria-labelledby="searchType">
+						<li role="presentation"><a class="dropdown-item" href="?semester=all" value="전체 학기">전체 학기</a></li>
+						<li><hr class="dropdown-divider"></li>
+						<li role="presentation"><a class="dropdown-item" href="?semester=1학년 1학기" value="1학년 1학기">1학년 1학기</a></li>
+						<li role="presentation"><a class="dropdown-item" href="?semester=1학년 2학기" value="1학년 2학기">1학년 2학기</a></li>
+						<li><hr class="dropdown-divider"></li>
+						<li role="presentation"><a class="dropdown-item" href="?semester=2학년 1학기" value="2학년 1학기">2학년 1학기</a></li>
+						<li role="presentation"><a class="dropdown-item" href="?semester=2학년 2학기" value="2학년 2학기">2학년 2학기</a></li>
+						<li><hr class="dropdown-divider"></li>
+						<li role="presentation"><a class="dropdown-item" href="?semester=3학년 1학기" value="3학년 1학기">3학년 1학기</a></li>
+						<li role="presentation"><a class="dropdown-item" href="?semester=3학년 2학기" value="3학년 2학기">3학년 2학기</a></li>
+						<li><hr class="dropdown-divider"></li>
+						<li role="presentation"><a class="dropdown-item" href="?semester=4학년 1학기" value="4학년 1학기">4학년 1학기</a></li>
+						<li role="presentation"><a class="dropdown-item" href="?semester=4학년 2학기" value="4학년 2학기">4학년 2학기</a></li>
+						<li><hr class="dropdown-divider"></li>
+						<li role="presentation"><a class="dropdown-item" href="?semester=5학년 1학기" value="5학년 1학기">5학년 1학기</a></li>
+						<li role="presentation"><a class="dropdown-item" href="?semester=5학년 2학기" value="5학년 2학기">5학년 2학기</a></li>
+						<li><hr class="dropdown-divider"></li>
+						<li role="presentation"><a class="dropdown-item" href="?semester=6학년 1학기" value="6학년 1학기">6학년 1학기</a></li>
+						<li role="presentation"><a class="dropdown-item" href="?semester=6학년 2학기" value="6학년 2학기">6학년 2학기</a></li>
+						</ul>
+					</div>
+					</th>
+					<th style="width: 39%">과목명</th>
+					<th style="width: 8%">성적</th>
+					<th style="width: 8%">학점</th>
+					<th style="width: 15%">전공유무</th>
+					<th style="width: 15%">교양영역</th>
+				</tr>
+			</thead>
+			<tbody style="text-align: center;">
+				<tr th:each="sugang : ${sugangs}">
+					<form th:action="@{/main/hello}" method="post"></form>
+					<td style="text-align: center;">
+						<input style="text-align: center; width: 80%;" type="text" name="semester" th:value="${sugang.semester}">
+					</td>
+					<td>
+						<input style="text-align: center; width: 90%;" type="text" name="subjectName" th:value="${sugang.subjectName}">
+					</td>
+					<td>
+						<select class="form-select" name="grade" style="text-align: center;">
+							<option value="A+" th:selected="${sugang.grade} == 'A+'">A+</option>
+							<option value="A0" th:selected="${sugang.grade} == 'A0'">A0</option>
+							<option value="B+" th:selected="${sugang.grade} == 'B+'">B+</option>
+							<option value="B0" th:selected="${sugang.grade} == 'B0'">B0</option>
+							<option value="C+" th:selected="${sugang.grade} == 'C+'">C+</option>
+							<option value="C0" th:selected="${sugang.grade} == 'C0'">C0</option>
+							<option value="D+" th:selected="${sugang.grade} == 'D+'">D+</option>
+							<option value="D0" th:selected="${sugang.grade} == 'D0'">D0</option>
+							<option value="F"  th:selected="${sugang.grade} == 'F'">F</option>
+							<option value="P" th:selected="${sugang.grade} == 'P'">P</option>
+							<option value="NP" th:selected="${sugang.grade} == 'NP'">NP</option>
+						</select>
+					</td>
+					<td>
+						<input style="text-align: center;" th:value="${sugang.credit}" type="number" id="credit" name="credit" min="0" max="3" step="1">
+					</td>
+					<td>
+						<select class="form-select" name="subjectType" style="text-align: center;">
+							<option value="채플" th:selected="${sugang.subjectType} == '채플'">채플</option>
+							<option value="전공 필수" th:selected="${sugang.subjectType} == 'true'">전공 필수</option>
+							<option value="전공 선택" th:selected="${sugang.subjectType} == '전공 선택'">전공 선택</option>
+							<option value="교양 필수" th:selected="${sugang.subjectType} == '교양 필수'">교양 필수</option>
+							<option value="교양 선택" th:selected="${sugang.subjectType} == '교양 선택'">교양 선택</option>
+							<option value="일반 선택" th:selected="${sugang.subjectType} == '일반 선택'">일반 선택</option>
+							<option value="부전공 필수" th:selected="${sugang.subjectType} == '부전공 필수'">부전공 필수</option>
+							<option value="부전공 선택" th:selected="${sugang.subjectType} == '부전공 선택'">부전공 선택</option>
+							<option value="복수전공 필수" th:selected="${sugang.subjectType} == '복수전공 필수'">복수전공 필수</option>
+							<option value="복수전공 선택"  th:selected="${sugang.subjectType} == '복수전공 선택'">복수전공 선택</option>
+							<option value="NULL"  th:selected="${sugang.subjectType} == 'false'"></option>
+						</select>
+					</td>
+					<td>
+						<select class="form-select" name="culture" style="text-align: center;">
+							<option value="NULL" th:selected="${sugang.culture} == null"></option>
+							<option value="인성교양" th:selected="${sugang.culture} == '인성교양'">인성교양</option>
+							<option value="인문학" th:selected="${sugang.culture} == '인문학'">인문학</option>
+							<option value="사회 과학" th:selected="${sugang.culture} == '사회 과학'">사회 과학</option>
+							<option value="자연 과학" th:selected="${sugang.culture} == '자연 과학'">자연 과학</option>
+							<option value="문화 예술" th:selected="${sugang.culture} == '문화 예술'">문화 예술</option>
+							<option value="인문 예술" th:selected="${sugang.culture} == '인문 예술'">인문 예술</option>
+							<option value="디지털리터러시" th:selected="${sugang.culture} == '디지털리터러시'">디지털리터러시</option>			
+						</select>
+					</td>
+					<td>
+						<input type="hidden" name="id" th:value="${sugang.id}">
+						<input type="submit" class="btn btn-primary" value="수정 값 저장하기">
+					</td>
+				</form>
 			</tr>
 		</tbody>
 	</table>

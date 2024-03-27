@@ -38,4 +38,17 @@ public class ShowService {
         return userRepository.findByusername(currentUsername)
                 .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
     }
+    public void modify(Sugang sugang, String smester, String subjectName, String credit, String grade, String subjectType, String culture) {
+        sugang.setSemester(smester); 
+        sugang.setSubjectName(subjectName);
+        sugang.setCredit(credit);
+        sugang.setGrade(grade);
+        sugang.setSubjectType(subjectType);
+        sugang.setCulture(culture);
+        sugangRepository.save(sugang);
+    }
+
+	public Sugang getSugangsForCurrentUser(Integer id) {
+		return sugangRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid sugang Id:" + id));
+	}
 }
