@@ -38,65 +38,65 @@
 				</tr>
 			</thead>
 			<tbody style="text-align: center;">
-				<tr th:object="${mainForm}">
-					<td style="text-align: center;">
-						<input style="text-align: center; width: 80%;" type="text" name="semester" th:value="${sugang.semester}">
-					</td>
-					<td>
-						<input style="text-align: center; width: 90%;" type="text" name="subjectName" th:value="${sugang.subjectName}">
-					</td>
-					<td>
-						<select class="form-select" name="grade" style="text-align: center;">
-							<option value="A+" th:selected="${sugang.grade} == 'A+'">A+</option>
-							<option value="A0" th:selected="${sugang.grade} == 'A0'">A0</option>
-							<option value="B+" th:selected="${sugang.grade} == 'B+'">B+</option>
-							<option value="B0" th:selected="${sugang.grade} == 'B0'">B0</option>
-							<option value="C+" th:selected="${sugang.grade} == 'C+'">C+</option>
-							<option value="C0" th:selected="${sugang.grade} == 'C0'">C0</option>
-							<option value="D+" th:selected="${sugang.grade} == 'D+'">D+</option>
-							<option value="D0" th:selected="${sugang.grade} == 'D0'">D0</option>
-							<option value="F"  th:selected="${sugang.grade} == 'F'">F</option>
-							<option value="P" th:selected="${sugang.grade} == 'P'">P</option>
-							<option value="NP" th:selected="${sugang.grade} == 'NP'">NP</option>
-						</select>
-					</td>
-					<td>
-						<input style="text-align: center;" th:value="${sugang.credit}" type="number" id="credit" name="credit" min="0" max="3" step="1">
-					</td>
-					<td>
-						<select class="form-select" name="subjectType" style="text-align: center;">
-							<option value="채플" th:selected="${sugang.subjectType} == '채플'">채플</option>
-							<option value="전공 필수" th:selected="${sugang.subjectType} == 'true'">전공 필수</option>
-							<option value="전공 선택" th:selected="${sugang.subjectType} == '전공 선택'">전공 선택</option>
-							<option value="교양 필수" th:selected="${sugang.subjectType} == '교양 필수'">교양 필수</option>
-							<option value="교양 선택" th:selected="${sugang.subjectType} == '교양 선택'">교양 선택</option>
-							<option value="일반 선택" th:selected="${sugang.subjectType} == '일반 선택'">일반 선택</option>
-							<option value="부전공 필수" th:selected="${sugang.subjectType} == '부전공 필수'">부전공 필수</option>
-							<option value="부전공 선택" th:selected="${sugang.subjectType} == '부전공 선택'">부전공 선택</option>
-							<option value="복수전공 필수" th:selected="${sugang.subjectType} == '복수전공 필수'">복수전공 필수</option>
-							<option value="복수전공 선택"  th:selected="${sugang.subjectType} == '복수전공 선택'">복수전공 선택</option>
-							<option value="NULL"  th:selected="${sugang.subjectType} == 'false'"></option>
-						</select>
-					</td>
-					<td>
-						<select class="form-select" name="culture" style="text-align: center;">
-							<option value="NULL" th:selected="${sugang.culture} == null"></option>
-							<option value="인성교양" th:selected="${sugang.culture} == '인성교양'">인성교양</option>
-							<option value="인문학" th:selected="${sugang.culture} == '인문학'">인문학</option>
-							<option value="사회 과학" th:selected="${sugang.culture} == '사회 과학'">사회 과학</option>
-							<option value="자연 과학" th:selected="${sugang.culture} == '자연 과학'">자연 과학</option>
-							<option value="문화 예술" th:selected="${sugang.culture} == '문화 예술'">문화 예술</option>
-							<option value="인문 예술" th:selected="${sugang.culture} == '인문 예술'">인문 예술</option>
-							<option value="디지털리터러시" th:selected="${sugang.culture} == '디지털리터러시'">디지털리터러시</option>			
-						</select>
-					</td>
-					<td>
-	            			<a th:href="@{|/main/modify/${sugang.id}|}" class="btn btn-primary"
-				                sec:authorize="isAuthenticated()"
-				                th:if="${sugang.author != null and #authentication.getPrincipal().getUsername() == sugang.author.username}"
-				                th:text="수정"></a>
-			        </td>
-			</tr>
+				<tr>
+					<form th:action="@{/main/modify/{id}(id=${sugang.id})}" th:object="${mainForm}" method="post">
+						<td style="text-align: center;">
+							<input style="text-align: center; width: 80%;" type="text" name="semester" th:value="*{semester}">
+						</td>
+						<td>
+							<input style="text-align: center; width: 90%;" type="text" name="subjectName" th:value="*{subjectName}">
+						</td>
+						<td>
+							<select class="form-select" name="grade" style="text-align: center;">
+								<option value="A+" th:selected="*{grade} == 'A+'">A+</option>
+								<option value="A0" th:selected="*{grade} == 'A0'">A0</option>
+								<option value="B+" th:selected="*{grade} == 'B+'">B+</option>
+								<option value="B0" th:selected="*{grade} == 'B0'">B0</option>
+								<option value="C+" th:selected="*{grade} == 'C+'">C+</option>
+								<option value="C0" th:selected="*{grade} == 'C0'">C0</option>
+								<option value="D+" th:selected="*{grade} == 'D+'">D+</option>
+								<option value="D0" th:selected="*{grade} == 'D0'">D0</option>
+								<option value="F"  th:selected="*{grade} == 'F'">F</option>
+								<option value="P" th:selected="*{grade} == 'P'">P</option>
+								<option value="NP" th:selected="*{grade} == 'NP'">NP</option>
+							</select>
+						</td>
+						<td>
+							<input style="text-align: center;" th:value="*{credit}" type="number" id="credit" name="credit" min="0" max="3" step="1">
+						</td>
+						<td>
+							<select class="form-select" name="subjectType" style="text-align: center;">
+								<option value="채플" th:selected="*{subjectType} == '채플'">채플</option>
+								<option value="전공 필수" th:selected="*{subjectType} == 'true'">전공 필수</option>
+								<option value="전공 선택" th:selected="*{subjectType} == '전공 선택'">전공 선택</option>
+								<option value="교양 필수" th:selected="*{subjectType} == '교양 필수'">교양 필수</option>
+								<option value="교양 선택" th:selected="*{subjectType} == '교양 선택'">교양 선택</option>
+								<option value="일반 선택" th:selected="*{subjectType} == '일반 선택'">일반 선택</option>
+								<option value="부전공 필수" th:selected="*{subjectType} == '부전공 필수'">부전공 필수</option>
+								<option value="부전공 선택" th:selected="*{subjectType} == '부전공 선택'">부전공 선택</option>
+								<option value="복수전공 필수" th:selected="*{subjectType} == '복수전공 필수'">복수전공 필수</option>
+								<option value="복수전공 선택"  th:selected="*{subjectType} == '복수전공 선택'">복수전공 선택</option>
+								<option value="NULL"  th:selected="*{subjectType} == 'false'"></option>
+							</select>
+						</td>
+						<td>
+							<select class="form-select" name="culture" style="text-align: center;">
+								<option value="" th:selected="*{culture} == '-'">-</option>
+								<option value="인성교양" th:selected="*{culture} == '인성교양'">인성교양</option>
+								<option value="인문학" th:selected="*{culture} == '인문학'">인문학</option>
+								<option value="사회 과학" th:selected="*{culture} == '사회 과학'">사회 과학</option>
+								<option value="자연 과학" th:selected="*{culture} == '자연 과학'">자연 과학</option>
+								<option value="문화 예술" th:selected="*{culture} == '문화 예술'">문화 예술</option>
+								<option value="인문 예술" th:selected="*{culture} == '인문 예술'">인문 예술</option>
+								<option value="디지털리터러시" th:selected="*{culture} == '디지털리터러시'">디지털리터러시</option>			
+							</select>
+						</td>
+						<td>
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+							<input type="submit" value="저장하기" class="btn btn-primary my-1">
+						</td>
+					</form>
+				</tr>
 		</tbody>
 	</table>
 </div>
