@@ -34,7 +34,7 @@ public class IndexController {
         model.addAttribute("sugangs", sugangs); // 모델에 sugangs 추가
         return "main_form";
     }
-//test2
+//test3
     @PostMapping("/main/hello")
     public String sugangModify(@Valid MainForm mainForm, BindingResult BindingResult, Principal principal, @RequestParam("id") Integer id,
                            @RequestParam String semester, @RequestParam String subjectName, @RequestParam String credit, 
