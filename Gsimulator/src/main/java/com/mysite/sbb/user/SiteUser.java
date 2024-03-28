@@ -17,13 +17,17 @@ public class SiteUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+ 
 	@Column(unique = true)
 	private String username;
 
 	private String password;
 	
 	private String enteryear;
+	
+	private String usergroup;
+	
+	private String major;
 
 	@Column(unique = true)
 	private String email;

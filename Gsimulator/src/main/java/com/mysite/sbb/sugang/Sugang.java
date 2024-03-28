@@ -2,7 +2,6 @@ package com.mysite.sbb.sugang;
 
 import com.mysite.sbb.user.SiteUser;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,7 +15,7 @@ import lombok.Setter;
 @Entity
 public class Sugang {
 	// SiteUser 엔티티와의 관계를 나타냅니다.
-	@ManyToOne(cascade = CascadeType.REMOVE)
+	@ManyToOne
     private SiteUser author;
 	
 	@Id

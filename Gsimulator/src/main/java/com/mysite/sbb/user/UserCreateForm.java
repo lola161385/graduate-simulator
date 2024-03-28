@@ -22,7 +22,13 @@ public class UserCreateForm {
 	
 	@NotEmpty(message = "입학년도는 필수항목입니다.")
 	private String enteryear;
-
+	
+	@NotEmpty(message = "단과대학은 필수항목입니다.")
+	private String usergroup;
+	
+	@NotEmpty(message = "학부는 필수항목입니다.")
+	private String major;
+	
 	@NotEmpty(message = "이메일은 필수항목입니다.")
 	@Email
 	private String email;

@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
 	private final UserService userService;
-
+	
 	@GetMapping("/signup")
 	public String signup(UserCreateForm userCreateForm) {
 		return "signup_form";
@@ -34,7 +34,7 @@ public class UserController {
 		}
 
 		try {
-			userService.create(userCreateForm.getUsername(), userCreateForm.getEmail(), userCreateForm.getPassword1(), userCreateForm.getEnteryear());
+			userService.create(userCreateForm.getUsername(), userCreateForm.getEmail(), userCreateForm.getPassword1(), userCreateForm.getEnteryear(), userCreateForm.getUsergroup(), userCreateForm.getMajor());
 		} catch (DataIntegrityViolationException e) {
 			e.printStackTrace();
 			bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");

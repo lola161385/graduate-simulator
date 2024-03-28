@@ -24,8 +24,10 @@ public class ShowService {
 
     public List<Sugang> getSugangsForCurrentUser() {
         SiteUser currentUser = getCurrentUser();
-        return sugangRepository.findByAuthor(currentUser);
+        // 학기 기준으로 오름차순 정렬된 모든 수강 정보 반환
+        return sugangRepository.findByAuthorOrderBySemesterAsc(currentUser);
     }
+
     
     public List<Sugang> getSugangsForCurrentUserAndSemester(String semester) {
         SiteUser currentUser = getCurrentUser();
@@ -49,4 +51,6 @@ public class ShowService {
 		// TODO 자동 생성된 메소드 스텁
 		
 	}
+	
+	
 }

@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,7 +28,6 @@ public class IndexController {
     @Autowired
     private ShowService showService; // ShowService 주입
     private final SugangService sugangService;
-    
 
     @GetMapping("/main/hello")
     public String hello(Model model, @RequestParam(value = "semester", required = false) String semester) {
@@ -42,7 +40,7 @@ public class IndexController {
         model.addAttribute("sugangs", sugangs); // 모델에 sugangs 추가
         return "main_form";
     }
-//test3
+
     @PostMapping("/main/hello")
     public String sugangModify(@Valid MainForm mainForm, BindingResult BindingResult, Principal principal, @RequestParam("id") Integer id,
                            @RequestParam String semester, @RequestParam String subjectName, @RequestParam String credit, 
@@ -89,6 +87,17 @@ public class IndexController {
         }
         
         this.sugangService.modify(sugang, mainForm.getSemester(), mainForm.getSubjectName(), mainForm.getCredit(), mainForm.getGrade(), mainForm.getSubjectType(), mainForm.getCulture());
+        return "redirect:/main/hello";
+    }
+    
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/main/delete/{id}")
+    public String questionDelete(Principal principal, @PathVariable("id") Integer id) {
+        Sugang sugang = this.sugangService.getSugang(id);
+        if (!sugang.getAuthor().getUsername().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
+        }
+        this.sugangService.delete(sugang);
         return "redirect:/main/hello";
     }
     

@@ -3,32 +3,7 @@
 		<table class="table" style="width: 100%">
 			<thead class="table-dark">
 				<tr class="text-center">
-					<th style="width: 15%">
-					<div class="dropdown">
-					<button class="btn btn-secondary dropdown-toggle" id="method_status" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" data-method="">전체 학기</button>
-						<ul id="method_type" class="dropdown-menu" role="menu" aria-labelledby="searchType">
-						<li role="presentation"><a class="dropdown-item" href="?semester=all" value="전체 학기">전체 학기</a></li>
-						<li><hr class="dropdown-divider"></li>
-						<li role="presentation"><a class="dropdown-item" href="?semester=1학년 1학기" value="1학년 1학기">1학년 1학기</a></li>
-						<li role="presentation"><a class="dropdown-item" href="?semester=1학년 2학기" value="1학년 2학기">1학년 2학기</a></li>
-						<li><hr class="dropdown-divider"></li>
-						<li role="presentation"><a class="dropdown-item" href="?semester=2학년 1학기" value="2학년 1학기">2학년 1학기</a></li>
-						<li role="presentation"><a class="dropdown-item" href="?semester=2학년 2학기" value="2학년 2학기">2학년 2학기</a></li>
-						<li><hr class="dropdown-divider"></li>
-						<li role="presentation"><a class="dropdown-item" href="?semester=3학년 1학기" value="3학년 1학기">3학년 1학기</a></li>
-						<li role="presentation"><a class="dropdown-item" href="?semester=3학년 2학기" value="3학년 2학기">3학년 2학기</a></li>
-						<li><hr class="dropdown-divider"></li>
-						<li role="presentation"><a class="dropdown-item" href="?semester=4학년 1학기" value="4학년 1학기">4학년 1학기</a></li>
-						<li role="presentation"><a class="dropdown-item" href="?semester=4학년 2학기" value="4학년 2학기">4학년 2학기</a></li>
-						<li><hr class="dropdown-divider"></li>
-						<li role="presentation"><a class="dropdown-item" href="?semester=5학년 1학기" value="5학년 1학기">5학년 1학기</a></li>
-						<li role="presentation"><a class="dropdown-item" href="?semester=5학년 2학기" value="5학년 2학기">5학년 2학기</a></li>
-						<li><hr class="dropdown-divider"></li>
-						<li role="presentation"><a class="dropdown-item" href="?semester=6학년 1학기" value="6학년 1학기">6학년 1학기</a></li>
-						<li role="presentation"><a class="dropdown-item" href="?semester=6학년 2학기" value="6학년 2학기">6학년 2학기</a></li>
-						</ul>
-					</div>
-					</th>
+					<th style="width: 15%">학기</th>
 					<th style="width: 30%">과목명</th>
 					<th style="width: 8%">성적</th>
 					<th style="width: 8%">학점</th>
@@ -89,9 +64,10 @@
 							<input style="text-align: center;" th:value="*{credit}" type="number" id="credit" name="credit" min="0" max="3" step="1">
 						</td>
 						<td>
-							<select class="form-select" name="subjectType" style="text-align: center;">
+							<select class="form-select" id="subjectType" name="subjectType" style="text-align: center;">
+								<option value=""  th:selected="*{subjectType} == 'false'">-</option>
 								<option value="채플" th:selected="*{subjectType} == '채플'">채플</option>
-								<option value="전공 필수" th:selected="*{subjectType} == 'true'">전공 필수</option>
+								<option value="전공 필수" th:selected="*{subjectType} == '전공 필수'">전공 필수</option>
 								<option value="전공 선택" th:selected="*{subjectType} == '전공 선택'">전공 선택</option>
 								<option value="교양 필수" th:selected="*{subjectType} == '교양 필수'">교양 필수</option>
 								<option value="교양 선택" th:selected="*{subjectType} == '교양 선택'">교양 선택</option>
@@ -100,19 +76,11 @@
 								<option value="부전공 선택" th:selected="*{subjectType} == '부전공 선택'">부전공 선택</option>
 								<option value="복수전공 필수" th:selected="*{subjectType} == '복수전공 필수'">복수전공 필수</option>
 								<option value="복수전공 선택"  th:selected="*{subjectType} == '복수전공 선택'">복수전공 선택</option>
-								<option value="NULL"  th:selected="*{subjectType} == 'false'"></option>
 							</select>
 						</td>
 						<td>
-							<select class="form-select" name="culture" style="text-align: center;">
-								<option value="" th:selected="*{culture} == '-'">-</option>
-								<option value="인성교양" th:selected="*{culture} == '인성교양'">인성교양</option>
-								<option value="인문학" th:selected="*{culture} == '인문학'">인문학</option>
-								<option value="사회 과학" th:selected="*{culture} == '사회 과학'">사회 과학</option>
-								<option value="자연 과학" th:selected="*{culture} == '자연 과학'">자연 과학</option>
-								<option value="문화 예술" th:selected="*{culture} == '문화 예술'">문화 예술</option>
-								<option value="인문 예술" th:selected="*{culture} == '인문 예술'">인문 예술</option>
-								<option value="디지털리터러시" th:selected="*{culture} == '디지털리터러시'">디지털리터러시</option>			
+							<select class="form-select" id="culture" name="culture" style="text-align: center;">
+									
 							</select>
 						</td>
 						<td>
@@ -124,4 +92,37 @@
 		</tbody>
 	</table>
 </div>
+<script layout:fragment="script" type='text/javascript' th:inline="javascript">
+document.addEventListener("DOMContentLoaded", function() {
+    var subjectSelect = document.getElementById("subjectType");
+    var cultureSelect = document.getElementById("culture");
+    /*<![CDATA[*/
+    var currentCulture = /*[[${mainForm.culture}]]*/ 'defaultCulture';
+    /*]]>*/
+    
+    function updateCultures(subjectType) {
+        var options = cultures[subjectType] || [];
+        cultureSelect.innerHTML = ""; // 기존 옵션들 제거
+
+        options.forEach(function(option) {
+            var optionElement = document.createElement("option");
+            optionElement.value = option.value;
+            optionElement.textContent = option.text;
+            // 현재 culture 값과 일치하는 옵션이 있다면, 선택된 상태로 설정
+            if(option.value === currentCulture) {
+                optionElement.selected = true;
+            }
+            cultureSelect.appendChild(optionElement);
+        });
+    }
+
+    // subjectType 변경 시 culture 옵션 업데이트
+    subjectSelect.addEventListener("change", function() {
+        updateCultures(this.value);
+    });
+
+    // 페이지 로딩 시 초기 옵션 설정
+    updateCultures(subjectSelect.value);
+});
+</script>
 </html>

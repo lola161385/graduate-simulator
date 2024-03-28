@@ -9,4 +9,5 @@ import com.mysite.sbb.user.SiteUser;
 public interface SugangRepository extends JpaRepository<Sugang, Integer>{
 	List<Sugang> findByAuthor(SiteUser author);
 	List<Sugang> findByAuthorAndSemester(SiteUser author, String semester);
+	List<Sugang> findByAuthorOrderBySemesterAsc(SiteUser author);
 }

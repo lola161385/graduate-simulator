@@ -24,10 +24,54 @@
 			<input type="text" th:field="*{enteryear}" class="form-control">
 		</div>
 		<div class="mb-3">
+			<label for="usergroup" class="form-label">단과대학</label>
+			<select id="usergroup" name="usergroup" class="form-select">
+				<option value="선택">선택</option>
+		        <option value="신학대학">신학대학</option>
+		        <option value="간호대학">간호대학</option>
+		        <option value="창의융합대학">창의융합대학</option>
+		        <option value="약학대학">약학대학</option>
+		        <option value="미래융합대학">미래융합대학</option>
+		        <option value="스미스학부대학">스미스학부대학</option> 
+		    </select>
+					
+		</div>
+		<div class="mb-3">
+			<label for="major" class="form-label">학부(과)</label>
+			<select class="form-select" id="major" name="major">
+				
+			</select>
+		</div>
+		
+		<div class="mb-3">
 			<label for="email" class="form-label">이메일</label>
 			<input type="email" th:field="*{email}" class="form-control">
 		</div>
 		<button type="submit" class="btn btn-primary">회원가입</button>
 	</form>
 </div>
+
+<script layout:fragment="script" type='text/javascript'>
+document.addEventListener("DOMContentLoaded", function() {
+    var groupSelect = document.getElementById("usergroup");
+    var majorSelect = document.getElementById("major");
+
+    function updateMajors(usergroup) {
+        var options = majors[usergroup] || [];
+        majorSelect.innerHTML = ""; // 기존 옵션들 제거
+        options.forEach(function(option) {
+            var optionElement = document.createElement("option");
+            optionElement.value = option.value;
+            optionElement.textContent = option.text;
+            majorSelect.appendChild(optionElement);
+        });
+    }
+
+    groupSelect.addEventListener("change", function() {
+        updateMajors(this.value);
+    });
+
+    updateMajors(groupSelect.value); // 페이지 로딩 시 초기 옵션 설정
+});
+</script>
 </html>

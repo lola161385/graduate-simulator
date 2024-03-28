@@ -36,11 +36,11 @@
 					</div>
 					</th>
 					<th style="width: 30%">과목명</th>
-					<th style="width: 8%">성적</th>
-					<th style="width: 8%">학점</th>
+					<th style="width: 6%">성적</th>
+					<th style="width: 6%">학점</th>
 					<th style="width: 15%">전공유무</th>
 					<th style="width: 15%">교양영역</th>
-					<th style="width: 9%">수정</th>
+					<th style="width: 13%">수정 삭제</th>
 				</tr>
 			</thead>
 			<tbody style="text-align: center;">
@@ -64,15 +64,30 @@
 		            <span th:text="${sugang.culture}">교양 영역</span>
 		        </td>
 		        <td>
-		            <a th:href="@{/main/modify/{id}(id=${sugang.id})}" class="btn btn-primary"
+		            <a th:href="@{/main/modify/{id}(id=${sugang.id})}" class="btn btn-primary btn-sm"
 		               sec:authorize="isAuthenticated()"
 		               th:if="${sugang.author != null and #authentication.getPrincipal().getUsername() == sugang.author.username}">
 		                수정
 		            </a>
+		            <a href="javascript:void(0);" th:data-uri="@{/main/delete/{id}(id=${sugang.id})}"
+		                class="delete btn btn-danger btn-sm" sec:authorize="isAuthenticated()"
+		                th:if="${sugang.author != null and #authentication.getPrincipal().getUsername() == sugang.author.username}"
+		                th:text="삭제">
+                	</a>
 		        </td>
 		    </tr>
 		    <bd>
 		</tbody>
 	</table>
 </div>
+<script layout:fragment="script" type='text/javascript'>
+const delete_elements = document.getElementsByClassName("delete");
+Array.from(delete_elements).forEach(function(element) {
+    element.addEventListener('click', function() {
+        if(confirm("정말로 삭제하시겠습니까?")) {
+            location.href = this.dataset.uri;
+        };
+    });
+});
+</script>
 </html>
