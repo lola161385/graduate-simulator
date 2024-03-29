@@ -56,4 +56,15 @@ public class SugangService {
         sugangRepository.save(sugang);
     }
 	
+	// 에브리타임에서 정보를 받아올때 중복 값 필터링
+	public Optional<Sugang> saveIfSubjectNameAndSemesterNotExist(Sugang sugang) {
+        Optional<Sugang> existingSugang = sugangRepository.findByAuthorAndSubjectNameAndSemester(sugang.getAuthor(), sugang.getSubjectName(), sugang.getSemester());
+        if (existingSugang.isEmpty()) {
+            return Optional.of(sugangRepository.save(sugang));
+        } else {
+            // 이미 존재하는 경우, 저장하지 않음
+            return Optional.empty();
+        }
+    }
+	
 }

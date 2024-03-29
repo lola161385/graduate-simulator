@@ -74,7 +74,6 @@ public class SugangController {
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 	    HttpEntity<Map<String, String>> entity = new HttpEntity<>(authInfo, headers);
 	    
-
 	    try {
 	        ResponseEntity<String> response = restTemplate.exchange(urlStr, HttpMethod.POST, entity, String.class);
 	        if (response.getStatusCode() == HttpStatus.OK) {
@@ -84,7 +83,7 @@ public class SugangController {
 
 	        	for (Sugang sugang : sugangMap.values()) {
 	        		sugang.setAuthor(siteUser); // Sugang 객체에 사용자 정보 설정
-	        		sugangService.saveSugang(sugang);
+	        		sugangService.saveIfSubjectNameAndSemesterNotExist(sugang);
 	        	}
 	        } else {
 	            // 에러 처리 로직...
