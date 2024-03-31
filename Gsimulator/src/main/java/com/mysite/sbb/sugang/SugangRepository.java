@@ -12,4 +12,5 @@ public interface SugangRepository extends JpaRepository<Sugang, Integer>{
 	List<Sugang> findByAuthorAndSemester(SiteUser author, String semester);
 	List<Sugang> findByAuthorOrderBySemesterAsc(SiteUser author);
 	Optional<Sugang> findByAuthorAndSubjectNameAndSemester(SiteUser author, String subjectName, String semester);
+	List<Sugang> findByAuthorAndCulture(SiteUser author, String culture);
 }

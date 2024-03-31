@@ -46,7 +46,7 @@ public class SugangService {
 	}
 	
 	// 수강정보 수정
-	public void modify(Sugang sugang, String smester, String subjectName, String credit, String grade, String subjectType, String culture) {
+	public void modify(Sugang sugang, String smester, String subjectName, Integer credit, String grade, String subjectType, String culture) {
         sugang.setSemester(smester); 
         sugang.setSubjectName(subjectName);
         sugang.setCredit(credit);

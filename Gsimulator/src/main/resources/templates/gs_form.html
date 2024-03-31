@@ -1,0 +1,184 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+	<div class="row flex-nowrap">
+        <!-- 좌측 메뉴 -->
+		<div class="col-auto col-md-4 col-xl-2 px-sm-2 px-0 bg-dark">
+			<div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-4 min-vh-100">
+		    	<!-- 메뉴 항목들 -->
+			    <div class="w-100 d-flex flex-row flex-wrap">
+					<div class="pt-2">
+					  	<h2 class="text-white">Information</h2>
+					</div>
+				    <div class="px-3 pt-1">
+			        	<div class="text-white" th:text="'학과: ' + ${site_user.major}">학과 정보</div> 
+			        	<div class="text-white" th:text="'입학년도: ' + ${site_user.enteryear}">입학 년도</div>
+			      	</div>
+			      	<div class="pt-4">
+					  	<h2 class="text-white">졸업요건</h2>
+					  	<div class="text-white px-3 pt-1" id="graduationRequirements">
+							  <p id="총학점">총학점: </p>
+							  <p id="교양">교양: </p>
+							  <p id="교양필수">교양필수: </p>
+							  <p id="교양선택">교양선택: </p>
+							  <p id="전공">전공: </p>
+							  <p id="채플">채플: </p>
+						</div>
+			      	</div>
+			      	<!-- 추가적인 메뉴 항목들 -->
+			    </div>
+			</div>
+		</div>
+
+            <!-- 오른쪽 콘텐츠 영역 -->
+            <div class="col py-3">
+                <!-- 상단 사용자 정보 및 요약 카드 -->
+                <table class="table table-bordered border border-2 border-black" style="width: 100%">
+					<tr class="text-center">
+						<th>구분</th>
+						<th>총이수학점</th>
+						<th>교양</th>
+						<th>교양필수</th>
+						<th>교양선택</th>
+						<th>전공</th>
+						<th>채플</th>
+					</tr>
+					<tbody class="table-group-divider" style="text-align: center;">
+						<tr>
+							<td scope="row">이수기준</td>
+							<td id="a총학점"></td>
+							<td id="a교양"></td>
+							<td id="a교양필수"></td>
+							<td id="a교양선택"></td>
+							<td id="a전공"></td>
+							<td id="a채플"></td>
+						</tr>
+						<tr>
+							<td scope="row">취득학점</td>
+							<td th:text="${totalCredits}" id="totalCredits"></td>
+							<td th:text="${culturetotalCredits}" id="culturetotalCredits"></td>
+							<td th:text="${cultureCredits}" id="cultureCredits"></td>
+							<td th:text="${cultureCredit}" id="cultureCredit"></td>
+							<td th:text="${majortotalCredits}" id="majortotalCredits"></td>
+							<td th:text="${chapelCount}" id="chapelCount"></td>
+						</tr>
+					</tbody>
+				</table>
+                
+                <!-- 하단 성적 차트 및 그래프 영역 -->
+                <div class="col py-3">
+                    <table class="table table-bordered border border-2 border-black" style="width: 100%">
+					<tr class="text-center">
+						<th style="width: 14.2%">선택영역</th>
+						<th id="cs1" style="width: 14.2%"></th>
+						<th id="cs2" style="width: 14.2%"></th>
+						<th id="cs3" style="width: 14.2%"></th>
+						<th id="cs4" style="width: 14.2%"></th>
+						<th id="cs5" style="width: 14.2%"></th>
+						<th id="cs6" style="width: 14.2%"></th>
+					</tr>
+					<tr class="text-center">
+						<th style="width: 14.2%">학점</th>
+						<th th:text="${sumCreditsCs1}" id="sumCreditsCs1" style="width: 14.2%"></th>
+						<th th:text="${sumCreditsCs2}" id="sumCreditsCs2" style="width: 14.2%"></th>
+						<th th:text="${sumCreditsCs3}" id="sumCreditsCs3" style="width: 14.2%"></th>
+						<th th:text="${sumCreditsCs4}" id="sumCreditsCs4" style="width: 14.2%"></th>
+						<th th:text="${sumCreditsCs5}" id="sumCreditsCs5" style="width: 14.2%"></th>
+						<th th:text="${sumCreditsCs6}" id="sumCreditsCs6" style="width: 14.2%"></th>
+					</tr>
+				</table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script layout:fragment="script" type='text/javascript' th:inline="javascript">
+	function styleCultureSubjects(hasTaken, elementId) {
+	    const element = document.getElementById(elementId);
+	    if (hasTaken) {
+	        element.style.backgroundColor = 'lightgreen'; // 수강한 경우 초록색
+	    } else {
+	        element.style.backgroundColor = 'white'; // 수강하지 않은 경우 빨간색
+	    }
+	}
+	document.addEventListener('DOMContentLoaded', function() {
+		/*<![CDATA[*/
+		  const major = /*[[${site_user.major}]]*/'';
+		  const enteryear = /*[[${site_user.enteryear}]]*/'';
+		  
+		  const hasTakenCs1 = /*[[${hasTakenCs1}]]*/'';
+		  const hasTakenCs2 = /*[[${hasTakenCs2}]]*/'';
+		  const hasTakenCs3 = /*[[${hasTakenCs3}]]*/'';
+		  const hasTakenCs4 = /*[[${hasTakenCs4}]]*/'';
+		  const hasTakenCs5 = /*[[${hasTakenCs5}]]*/'';
+		  const hasTakenCs6 = /*[[${hasTakenCs6}]]*/'';
+		/*]]>*/
+		
+    	
+	  // 졸업 요건 데이터를 가져옴
+	  const requirements = getGraduationRequirements(major, enteryear);
+	  const caltureRequirements = getCaltureRequirements(enteryear);
+	  
+	  if (requirements) {
+	    document.getElementById('총학점').textContent = '총학점: ' + requirements['총학점']+'학점';
+		document.getElementById('교양').textContent = '교양: ' + requirements['교양']+'학점';
+	    document.getElementById('교양필수').textContent = '교양필수: ' + requirements['교양필수']+'학점';
+		document.getElementById('교양선택').textContent = '교양선택: ' + requirements['교양선택']+'학점';
+	    document.getElementById('전공').textContent = '전공: ' + requirements['전공']+'학점';
+		document.getElementById('채플').textContent = '채플: ' + requirements['채플']+'학기';
+		document.getElementById('a총학점').textContent = requirements['총학점'];
+		document.getElementById('a교양').textContent = requirements['교양'];
+	    document.getElementById('a교양필수').textContent = requirements['교양필수'];
+		document.getElementById('a교양선택').textContent = requirements['교양선택'];
+	    document.getElementById('a전공').textContent = requirements['전공'];
+		document.getElementById('a채플').textContent = requirements['채플'];
+		
+		// 이수기준과 취득학점 비교 후 스타일 변경
+		const totalCreditsElement = document.getElementById('totalCredits');
+        const culturetotalCreditsElement = document.getElementById('culturetotalCredits');
+        const cultureCredits = document.getElementById('cultureCredits');
+        const cultureCreditElement = document.getElementById('cultureCredit');
+        const majortotalCreditsElement = document.getElementById('majortotalCredits');
+        const chapelCount = document.getElementById('chapelCount');
+        
+        compareAndStyle(totalCreditsElement, requirements['총학점']);
+        compareAndStyle(culturetotalCreditsElement, requirements['교양']);
+        compareAndStyle(cultureCredits, requirements['교양필수']);
+        compareAndStyle(cultureCreditElement, requirements['교양선택']);
+        compareAndStyle(majortotalCreditsElement, requirements['전공']);
+        compareAndStyle(chapelCount, requirements['채플']);
+        
+        document.getElementById('cs1').textContent = caltureRequirements['cs1'];
+		document.getElementById('cs2').textContent = caltureRequirements['cs2'];
+		document.getElementById('cs3').textContent = caltureRequirements['cs3'];
+		document.getElementById('cs4').textContent = caltureRequirements['cs4'];
+		document.getElementById('cs5').textContent = caltureRequirements['cs5'];
+		document.getElementById('cs6').textContent = caltureRequirements['cs6'];
+		
+		styleCultureSubjects(hasTakenCs1, 'cs1');
+	    styleCultureSubjects(hasTakenCs2, 'cs2');
+	    styleCultureSubjects(hasTakenCs3, 'cs3');
+	    styleCultureSubjects(hasTakenCs4, 'cs4');
+	    styleCultureSubjects(hasTakenCs5, 'cs5');
+	    styleCultureSubjects(hasTakenCs6, 'cs6');
+
+	  } else {
+	    // 졸업 요건 정보가 없는 경우의 처리
+	    document.getElementById('graduationRequirements').textContent = '졸업 요건 정보를 불러올 수 없습니다.';
+	  }
+
+		  
+	});
+	
+	// 이수기준과 취득학점을 비교하고 스타일을 변경하는 함수
+function compareAndStyle(element, standard) {
+    if(element && standard) {
+        const achievedCredits = parseInt(element.textContent);
+        if (achievedCredits >= standard) {
+            element.style.backgroundColor = 'lightskyblue';
+        } else if (achievedCredits < standard) {
+            element.style.backgroundColor = 'lightcoral';
+        }
+    }
+}
+</script>
+</html>
