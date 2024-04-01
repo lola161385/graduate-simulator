@@ -44,6 +44,9 @@ public class IndexController {
         Integer cultureCredits = showService.getCultureCredits(currentUser);
         Integer cultureCredit = showService.getCultureCredit(currentUser);
         Integer majortotalCredits = showService.getMajorTotalCredits(currentUser);
+        Integer majorCredits = showService.getMajorCredits(currentUser);
+        Integer majorCredit = showService.getMajorCredit(currentUser);
+        Integer normalCredit = showService.getNormalCredit(currentUser);
         Long chapelCount = showService.getChapelCount(currentUser);
         
         model.addAttribute("site_user", currentUser);
@@ -53,6 +56,9 @@ public class IndexController {
         model.addAttribute("cultureCredits", cultureCredits);
         model.addAttribute("cultureCredit", cultureCredit);
         model.addAttribute("majortotalCredits", majortotalCredits);
+        model.addAttribute("majorCredits", majorCredits);
+        model.addAttribute("majorCredit", majorCredit);
+        model.addAttribute("normalCredit", normalCredit);
         model.addAttribute("chapelCount", chapelCount);
         model.addAttribute("hasTakenCs1", showService.hasTakenCultureSubject(currentUser, checkcs.getCs1()));
         model.addAttribute("hasTakenCs2", showService.hasTakenCultureSubject(currentUser, checkcs.getCs2()));

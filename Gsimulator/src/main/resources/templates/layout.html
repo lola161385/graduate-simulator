@@ -14,10 +14,13 @@
 	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
 	<!-- sbb CSS -->
 	<link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+	<!-- chart.js 라이브러리-->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 	<title>Hello, sbb!</title>
 </head>
 
-<body>
+<body style="font-family: CookieRun; font-weight: 500;">
 	<!-- 네비게이션바 -->
 	<nav th:replace="~{navbar :: navbarFragment}"></nav>
 	<!-- 기본 템플릿 안에 삽입될 내용 Start -->

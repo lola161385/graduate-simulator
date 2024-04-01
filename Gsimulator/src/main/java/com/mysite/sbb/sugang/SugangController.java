@@ -35,8 +35,13 @@ public class SugangController {
 	private final UserRepository userRepository;
 
 	@GetMapping("/send")
-	public String login() {
-		return "flask_form";
+	public String login(RedirectAttributes redirectAttributes) {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    if (principal instanceof UserDetails) {
+	    	return "flask_form";
+	    } else {
+	        return "redirect:/user/login";
+	    }
 	}
 	
 	@GetMapping("/closed")
