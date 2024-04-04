@@ -80,14 +80,14 @@ public class ShowService {
     public Integer getCultureCredits(SiteUser user) {
         return sugangRepository.findByAuthor(user)
                 .stream()
-                .filter(sugang -> "교양 필수".equals(sugang.getSubjectType()))
+                .filter(sugang -> "교양필수".equals(sugang.getSubjectType()))
                 .mapToInt(Sugang::getCredit)
                 .sum();
     }
     public Integer getCultureCredit(SiteUser user) {
         return sugangRepository.findByAuthor(user)
                 .stream()
-                .filter(sugang -> "교양 선택".equals(sugang.getSubjectType()))
+                .filter(sugang -> "교양선택".equals(sugang.getSubjectType()))
                 .mapToInt(Sugang::getCredit)
                 .sum();
     }
@@ -102,7 +102,7 @@ public class ShowService {
     public Integer getMajorCredits(SiteUser user) {
         return sugangRepository.findByAuthor(user)
                 .stream()
-                .filter(sugang -> "전공 필수".equals(sugang.getSubjectType()))
+                .filter(sugang -> "전공필수".equals(sugang.getSubjectType()))
                 .mapToInt(Sugang::getCredit)
                 .sum();
     }
@@ -110,7 +110,7 @@ public class ShowService {
     public Integer getMajorCredit(SiteUser user) {
         return sugangRepository.findByAuthor(user)
                 .stream()
-                .filter(sugang -> "전공 선택".equals(sugang.getSubjectType()))
+                .filter(sugang -> "전공선택".equals(sugang.getSubjectType()))
                 .mapToInt(Sugang::getCredit)
                 .sum();
     }
@@ -118,7 +118,7 @@ public class ShowService {
     public Integer getNormalCredit(SiteUser user) {
         return sugangRepository.findByAuthor(user)
                 .stream()
-                .filter(sugang -> "일반 선택".equals(sugang.getSubjectType()))
+                .filter(sugang -> "일반선택".equals(sugang.getSubjectType()))
                 .mapToInt(Sugang::getCredit)
                 .sum();
     }
