@@ -54,7 +54,7 @@ public class SugangController {
 	
 	@PostMapping("/send")
 	public String sendToFlask(RedirectAttributes redirectAttributes) {
-	    String urlStr = "http://localhost:7001/get";
+	    String urlStr = "http://210.109.53.231:7001/get";
 	    // 현재 인증된 사용자의 UserDetails 가져오기
 	    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	    String username = null;
