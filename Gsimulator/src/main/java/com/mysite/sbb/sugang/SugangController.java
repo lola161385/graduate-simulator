@@ -53,7 +53,7 @@ public class SugangController {
 	}
 	
 	@PostMapping("/send")
-	public String sendToFlask(@RequestParam("id") String id, RedirectAttributes redirectAttributes) {
+	public String sendToFlask(RedirectAttributes redirectAttributes) {
 	    String urlStr = "http://localhost:7001/get";
 	    // 현재 인증된 사용자의 UserDetails 가져오기
 	    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -73,7 +73,7 @@ public class SugangController {
 
 	    // 인증 정보를 포함하는 맵 생성
 	    Map<String, String> authInfo = new HashMap<>();
-	    authInfo.put("id", id);
+	    authInfo.put("id", username);
 
 	    // RestTemplate을 사용하여 요청을 보냄
 	    RestTemplate restTemplate = new RestTemplate();

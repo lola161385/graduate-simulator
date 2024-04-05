@@ -1,14 +1,10 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="container my-3">
 	<form th:action="@{/sugang/send}" method="post">
-		<div class="mb-3">
-			<label for="id" class="form-label">에브리타임ID</label>
-			<input type="text" name="id" id="id" class="form-control">
-		</div>
-		<button type="submit" class="btn btn-primary">로그인</button>
+		<button type="submit" class="btn btn-primary">수위스 연동하기</button>
 	</form>
 	<div class="alert alert-warning" role="alert">
-		  <h4 class="alert-heading">에브리타임 경고</h4>
+		  <h4 class="alert-heading">수윙스 경고</h4>
 		  <hr>
 		  <p>에브리타임에 여러번 로그인시도 하지 말아주세요.</p>
 		  <p>에브리타임에 새로운 학기 시간표를 입력했을때만 시도해주세요.</p>
