@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -33,6 +35,7 @@ import lombok.RequiredArgsConstructor;
 public class SugangController {
 	private final SugangService sugangService;
 	private final UserRepository userRepository;
+	private static final Logger logger = LoggerFactory.getLogger(SugangController.class);
 
 	@GetMapping("/send")
 	public String login(RedirectAttributes redirectAttributes) {
@@ -81,6 +84,7 @@ public class SugangController {
 	    try {
 	        ResponseEntity<String> response = restTemplate.exchange(urlStr, HttpMethod.POST, entity, String.class);
 	        if (response.getStatusCode() == HttpStatus.OK) {
+	        	logger.info("Response from Flask: {}", response.getBody());
 	        	ObjectMapper objectMapper = new ObjectMapper();
 	        	TypeReference<HashMap<Integer, Sugang>> typeRef = new TypeReference<>() {};
 	        	Map<Integer, Sugang> sugangMap = objectMapper.readValue(response.getBody(), typeRef);
