@@ -8,16 +8,32 @@ input[type=submit] {
 
 @font-face{
 	font-family: 'CookieRun';
-	src: url(/src/main/resources/static/font/CookieRun\ Regular.ttf) format('truetype');
+	src: url(/font/CookieRun\ Regular.ttf) format('truetype');
 	font-weight: 300;
 }
 @font-face{
 	font-family: 'CookieRun';
-	src: url(/src/main/resources/static/font/CookieRun\ Bold.ttf) format('truetype');
+	src: url(/font/CookieRun\ Bold.ttf) format('truetype');
 	font-weight: 400;
 }
 @font-face{
 	font-family: 'CookieRun';
-	src: url(/src/main/resources/static/font/CookieRun\ Black.ttf) format('truetype');
+	src: url(/font/CookieRun\ Black.ttf) format('truetype');
+	font-weight: 500;
+}
+
+@font-face{
+	font-family: 'Gmarket';
+	src: url(/font/GmarketSansTTFLight.ttf) format('truetype');
+	font-weight: 300;
+}
+@font-face{
+	font-family: 'Gmarket';
+	src: url(/font/GmarketSansTTFMedium.ttf) format('truetype');
+	font-weight: 400;
+}
+@font-face{
+	font-family: 'Gmarket';
+	src: url(/font/GmarketSansTTFBold.ttf) format('truetype');
 	font-weight: 500;
 }

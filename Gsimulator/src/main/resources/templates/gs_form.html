@@ -1,20 +1,20 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="container my-3">
-    <div class="row" style="font-family: CookieRun; font-weight: 300;">
+    <div class="row" style="font-family: Gmarket; font-weight: 500;">
         <!-- 좌측 메뉴 -->
         <div class="col-auto col-md-4 col-xl-2 px-sm-2 px-0 bg-dark">
             <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-4 min-vh-100">
                 <!-- 메뉴 항목들 -->
                 <div class="w-100 d-flex flex-row flex-wrap">
                     <div class="pt-2" style="margin-right: 80px;">
-                        <h2 class="text-white" >Information</h2>
+                        <h3 class="text-white" >Information</h3>
 	                    <div class="px-3 pt-1" >
 	                        <div class="text-white" th:text="'학과: ' + ${site_user.major}">학과 정보</div>
 	                        <div class="text-white" th:text="'입학년도: ' + ${site_user.enteryear}">입학 년도</div>
 	                    </div>
                     </div>
                     <div class="pt-4">
-                        <h2 class="text-white">졸업요건</h2>
+                        <h3 class="text-white">졸업요건</h3>
                         <div class="text-white px-3 pt-1" id="graduationRequirements">
                             <p id="총학점">총학점: </p>
                             <p id="교양">교양: </p>
@@ -35,7 +35,7 @@
         <!-- 오른쪽 콘텐츠 영역 -->
         <div class="col py-3">
             <!-- 상단 사용자 정보 및 요약 카드 -->
-            <table class="table table-bordered border border-2 border-black" style="width: 100%; font-family: CookieRun;">
+            <table class="table table-bordered border border-2 border-black" style="width: 100%; font-family: Gmarket;  font-weight: 500;">
                 <tr class="text-center">
                     <th style="width: 10%">구분</th>
                     <th style="width: 10%">총이수학점</th>
@@ -283,7 +283,7 @@
                                             ticks: {
                                                 font: {
                                                     size: 14, // y축 라벨의 글꼴 크기 설정
-                                                    family: 'CookieRun', // y축 라벨의 글꼴 설정
+                                                    family: 'Gmarket', // y축 라벨의 글꼴 설정
                                                     weight: 500
                                                 }
                                             }
@@ -292,7 +292,7 @@
                                             ticks: {
                                                 font: {
                                                     size: 15, // x축 라벨의 글꼴 크기 설정
-                                                    family: 'CookieRun', // x축 라벨의 글꼴 설정
+                                                    family: 'Gmarket', // x축 라벨의 글꼴 설정
                                                     weight: 500
                                                 }
                                             }
@@ -303,7 +303,7 @@
                                         datalabels: {
                                             font: {
                                                 size: 12, // 데이터 라벨의 글꼴 크기 설정
-                                                family: 'CookieRun', // 데이터 라벨의 글꼴 설정
+                                                family: 'Gmarket', // 데이터 라벨의 글꼴 설정
                                                 weight: 500
                                             },
                                             align: 'end',
