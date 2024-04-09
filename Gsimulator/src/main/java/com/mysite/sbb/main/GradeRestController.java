@@ -29,7 +29,7 @@ public class GradeRestController {
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
         // getAverageGradesPerSemesterSortedIncludingSummer 메소드를 사용하여 정렬된 데이터를 반환
-        Map<String, Double> averageGrades = showService.getAverageGradesPerSemesterSortedIncludingSummer(currentUser);
+        Map<String, Double> averageGrades = showService.getAverageGradesPerSemester(currentUser);
         return ResponseEntity.ok(averageGrades);
     }
     

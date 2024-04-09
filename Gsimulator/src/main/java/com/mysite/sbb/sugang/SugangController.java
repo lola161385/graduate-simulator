@@ -84,7 +84,8 @@ public class SugangController {
 	    try {
 	        ResponseEntity<String> response = restTemplate.exchange(urlStr, HttpMethod.POST, entity, String.class);
 	        if (response.getStatusCode() == HttpStatus.OK) {
-	        	logger.info("Response from Flask: {}", response.getBody());
+	        	
+	        	System.out.println("Console.log: " + response.getBody()); // 콘솔에 출력
 	        	ObjectMapper objectMapper = new ObjectMapper();
 	        	TypeReference<HashMap<Integer, Sugang>> typeRef = new TypeReference<>() {};
 	        	Map<Integer, Sugang> sugangMap = objectMapper.readValue(response.getBody(), typeRef);

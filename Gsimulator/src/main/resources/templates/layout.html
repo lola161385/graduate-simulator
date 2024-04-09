@@ -17,14 +17,19 @@
 	<!-- chart.js 라이브러리-->
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-	<title>Hello, sbb!</title>
+	<title>SYU졸업시뮬</title>
 </head>
 
 <body style="font-family: CookieRun; font-weight: 500;">
-	<!-- 네비게이션바 -->
-	<nav th:replace="~{navbar :: navbarFragment}"></nav>
-	<!-- 기본 템플릿 안에 삽입될 내용 Start -->
-	<th:block layout:fragment="content"></th:block>
+	<div id='wrapper' style="height: auto; min-height: 100%; padding-bottom: 40px;">
+		<!-- 네비게이션바 -->
+		<nav th:replace="~{navbar :: navbarFragment}"></nav>
+		<!-- 기본 템플릿 안에 삽입될 내용 Start -->
+		<th:block layout:fragment="content"></th:block>
+	</div>
+	<!-- footer -->
+	<th:block th:replace="~{footer :: footerFragment}"></th:block>
+	
 	<!-- 기본 템플릿 안에 삽입될 내용 End -->
 	<script th:src="@{/major.js}"></script>
 	<script th:src="@{/culture.js}"></script>
@@ -49,6 +54,6 @@
 		    }
 		});
 	</script>
-</body>
 
+</body>
 </html>

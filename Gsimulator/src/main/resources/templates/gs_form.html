@@ -1,17 +1,17 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="container my-3">
-    <div class="row flex-nowrap" style="font-family: CookieRun; font-weight: 300;">
+    <div class="row" style="font-family: CookieRun; font-weight: 300;">
         <!-- 좌측 메뉴 -->
         <div class="col-auto col-md-4 col-xl-2 px-sm-2 px-0 bg-dark">
             <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-4 min-vh-100">
                 <!-- 메뉴 항목들 -->
                 <div class="w-100 d-flex flex-row flex-wrap">
-                    <div class="pt-2">
-                        <h2 class="text-white">Information</h2>
-                    </div>
-                    <div class="px-3 pt-1">
-                        <div class="text-white" th:text="'학과: ' + ${site_user.major}">학과 정보</div>
-                        <div class="text-white" th:text="'입학년도: ' + ${site_user.enteryear}">입학 년도</div>
+                    <div class="pt-2" style="margin-right: 80px;">
+                        <h2 class="text-white" >Information</h2>
+	                    <div class="px-3 pt-1" >
+	                        <div class="text-white" th:text="'학과: ' + ${site_user.major}">학과 정보</div>
+	                        <div class="text-white" th:text="'입학년도: ' + ${site_user.enteryear}">입학 년도</div>
+	                    </div>
                     </div>
                     <div class="pt-4">
                         <h2 class="text-white">졸업요건</h2>

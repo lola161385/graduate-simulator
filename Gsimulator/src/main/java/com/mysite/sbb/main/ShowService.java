@@ -36,10 +36,8 @@ public class ShowService {
 
     public List<Sugang> getSugangsForCurrentUser() {
         SiteUser currentUser = getCurrentUser();
-        // 학기 기준으로 오름차순 정렬된 모든 수강 정보 반환
         return sugangRepository.findByAuthorOrderBySemesterAsc(currentUser);
     }
-
     
     public List<Sugang> getSugangsForCurrentUserAndSemester(String semester) {
         SiteUser currentUser = getCurrentUser();
@@ -52,24 +50,22 @@ public class ShowService {
         return userRepository.findByusername(currentUsername)
                 .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
     }
-    
 
-	public Sugang getSugangsForCurrentUser(Integer id) {
-		return sugangRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid sugang Id:" + id));
-	}
+    public Sugang getSugangsForCurrentUser(Integer id) {
+        return sugangRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid sugang Id:" + id));
+    }
 
-	public void modify(Sugang sugang, String semester, String subjectName, Integer credit, String grade,
-			String subjectType, String culture) {
-		// TODO 자동 생성된 메소드 스텁	
-	}
-	
-	// 사용자의 학점을 계산하는 메소드
+    public void modify(Sugang sugang, String semester, String subjectName, Integer credit, String grade, String subjectType, String culture) {
+        // Method implementation needed
+    }
+
     public Integer getTotalCredits(SiteUser user) {
         return sugangRepository.findByAuthor(user)
                 .stream()
                 .mapToInt(Sugang::getCredit)
                 .sum();
     }
+    
     public Integer getCultureTotalCredits(SiteUser user) {
         return sugangRepository.findByAuthor(user)
                 .stream()
@@ -143,8 +139,7 @@ public class ShowService {
                 .mapToInt(Sugang::getCredit)
                 .sum();
     }
-    
-    //전체 평균 계산 로직
+
     public Map<String, Double> getAverageGradesPerSemester(SiteUser user) {
         Map<String, Double> averageGrades = new HashMap<>();
         List<Sugang> sugangs = sugangRepository.findByAuthor(user);
@@ -168,59 +163,10 @@ public class ShowService {
         return averageGrades;
     }
 
-    private double gradeToPoint(String grade) {
-        switch (grade) {
-            case "A+": return 4.5;
-            case "A": return 4.0;
-            case "B+": return 3.5;
-            case "B": return 3.0;
-            case "C+": return 2.5;
-            case "C": return 2.0;
-            case "D+": return 1.5;
-            case "D": return 1.0;
-            case "F":  return 0.0;
-            default:   return 0.0; // 'P' or 'NP' or any other grade
-        }
-    }
-    
- // 학기별 평균 학점을 계산하고, 학년 및 학기 순으로 정렬하여 반환하는 메소드
-    public Map<String, Double> getAverageGradesPerSemesterSortedIncludingSummer(SiteUser user) {
-        Map<String, Double> averageGrades = getAverageGradesPerSemester(user);
-    
-        // 학기를 "1학년 1학기", "1학년 2학기", "1학년 계절학기", ... 순서로 정렬
-        Map<String, Double> sortedAverageGrades = averageGrades.entrySet().stream()
-            .sorted(Map.Entry.comparingByKey(new Comparator<String>() {
-                @Override
-                public int compare(String o1, String o2) {
-                    String[] parts1 = o1.split("학년 |학기");
-                    String[] parts2 = o2.split("학년 |학기");
-    
-                    int yearComparison = Integer.compare(Integer.parseInt(parts1[0]), Integer.parseInt(parts2[0]));
-                    if (yearComparison != 0) {
-                        return yearComparison;
-                    }
-    
-                    // "계절학기"를 포함한 학기 비교
-                    int semester1 = "계절".equals(parts1[1]) ? 3 : Integer.parseInt(parts1[1]);
-                    int semester2 = "계절".equals(parts2[1]) ? 3 : Integer.parseInt(parts2[1]);
-                    return Integer.compare(semester1, semester2);
-                }
-            }))
-            .collect(Collectors.toMap(
-                Map.Entry::getKey,
-                Map.Entry::getValue,
-                (e1, e2) -> e1,
-                LinkedHashMap::new // 순서를 유지하는 Map 사용
-            ));
-    
-        return sortedAverageGrades;
-    }
-    
-    //전공평균 계산 로직
     public Map<String, Double> getAverageMajorGradesPerSemesterSortedIncludingSummer(SiteUser user) {
         Map<String, Double> averageGrades = new HashMap<>();
         List<Sugang> sugangs = sugangRepository.findByAuthor(user).stream()
-                .filter(sugang -> sugang.getSubjectType().contains("전공")) // 전공 과목만 필터링
+                .filter(sugang -> sugang.getSubjectType().contains("전공"))
                 .collect(Collectors.toList());
 
         Map<String, List<Sugang>> sugangsBySemester = sugangs.stream()
@@ -239,29 +185,53 @@ public class ShowService {
             averageGrades.put(semester, averageGrade);
         });
 
-        // 학기별 데이터를 정렬
         return averageGrades.entrySet().stream()
-        	    .sorted(Map.Entry.<String, Double>comparingByKey((o1, o2) -> {
-        	        String[] parts1 = o1.split("학년 |학기");
-        	        String[] parts2 = o2.split("학년 |학기");
+            .sorted(Map.Entry.comparingByKey(new Comparator<String>() {
+                @Override
+                public int compare(String o1, String o2) {
+                    String[] parts1 = o1.split("학년 |학기");
+                    String[] parts2 = o2.split("학년 |학기");
 
-        	        int yearComparison = Integer.compare(Integer.parseInt(parts1[0]), Integer.parseInt(parts2[0]));
-        	        if (yearComparison != 0) {
-        	            return yearComparison;
-        	        }
+                    int yearComparison = Integer.compare(Integer.parseInt(parts1[0]), Integer.parseInt(parts2[0]));
+                    if (yearComparison != 0) {
+                        return yearComparison;
+                    }
 
-        	        // "계절학기"를 포함한 학기 비교
-        	        // "계절학기"의 경우 파싱되지 않으므로, 조건문으로 처리
-        	        int semester1 = parts1[1].equals("계절") ? 3 : Integer.parseInt(parts1[1]);
-        	        int semester2 = parts2[1].equals("계절") ? 3 : Integer.parseInt(parts2[1]);
-        	        return Integer.compare(semester1, semester2);
-        	    }))
-        	    .collect(Collectors.toMap(
-        	        Map.Entry::getKey,
-        	        Map.Entry::getValue,
-        	        (e1, e2) -> e1,
-        	        LinkedHashMap::new)); // 순서를 유지하는 Map 사용
+                    int semester1 = parseSemester(parts1[1]);
+                    int semester2 = parseSemester(parts2[1]);
+                    return Integer.compare(semester1, semester2);
+                }
+            }))
+            .collect(Collectors.toMap(
+                Map.Entry::getKey,
+                Map.Entry::getValue,
+                (e1, e2) -> e1,
+                LinkedHashMap::new));
     }
 
+    private int parseSemester(String semester) {
+        if (semester.contains("계절")) {
+            if (semester.startsWith("1학기")) {
+                return 3;  // "1학기 계절"은 3으로 매핑
+            } else if (semester.startsWith("2학기")) {
+                return 4;  // "2학기 계절"은 4로 매핑
+            }
+        }
+        return Integer.parseInt(semester.replaceAll("[^0-9]", ""));  // "1학기", "2학기" 등은 숫자로 직접 변환
+    }
 
+    private double gradeToPoint(String grade) {
+        switch (grade) {
+            case "A+": return 4.5;
+            case "A": return 4.0;
+            case "B+": return 3.5;
+            case "B": return 3.0;
+            case "C+": return 2.5;
+            case "C": return 2.0;
+            case "D+": return 1.5;
+            case "D": return 1.0;
+            case "F":  return 0.0;
+            default:   return 0.0; // 'P' or 'NP' or any other grade not included in the grading scale
+        }
+    }
 }
