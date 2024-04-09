@@ -33,7 +33,7 @@ public class Answer {
 	@ManyToOne(cascade = CascadeType.REMOVE)
 	private Question question;
 
-	@ManyToOne(cascade = CascadeType.REMOVE)
+	@ManyToOne
 	private SiteUser author;
 
 	private LocalDateTime modifyDate;
