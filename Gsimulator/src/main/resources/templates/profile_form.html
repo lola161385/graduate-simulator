@@ -1,0 +1,91 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+	<div class="my-3 border-bottom">
+		<div>
+			<h4>회원 정보 수정</h4>
+		</div>
+	</div>
+	<form th:action="@{/user/profile/modify}" th:object="${userForm}" method="post">
+		<div th:replace="~{form_errors :: formErrorsFragment}"></div>
+		<div class="mb-3">
+			<input id="username" type="text" th:value="*{username}" class="form-control" readonly>
+		</div>
+		<div class="alert alert-warning" role="alert" id ="hoverAlert">
+		  <h4 class="alert-heading">아이디</h4>
+		  <hr>
+		  <p>아이디는 수정 불가합니다.</p>
+		  <p>수정을 원하시면 관리자에게 문의 해주세요.</p>
+		</div>
+		<div class="mb-3">
+			<label for="enteryear" class="form-label">입학년도</label>
+			<input type="text" th:field="*{enteryear}" class="form-control">
+		</div>
+		<div class="mb-3">
+			<label for="usergroup" class="form-label">단과대학</label>
+			<select id="usergroup" name="usergroup" class="form-select">
+		        <option value="신학대학" th:selected="*{usergroup} == '신학대학'">신학대학</option>
+		        <option value="간호대학" th:selected="*{usergroup} == '간호대학'">간호대학</option>
+		        <option value="창의융합대학" th:selected="*{usergroup} == '창의융합대학'">창의융합대학</option>
+		        <option value="약학대학" th:selected="*{usergroup} == '약학대학'">약학대학</option>
+		        <option value="미래융합대학" th:selected="*{usergroup} == '미래융합대학'">미래융합대학</option>
+		        <option value="스미스학부대학" th:selected="*{usergroup} == '스미스학부대학'">스미스학부대학</option> 
+		    </select>
+					
+		</div>
+		<div class="mb-3">
+			<label for="major" class="form-label">학부(과)</label>
+			<select class="form-select" id="major" name="major">
+				
+			</select>
+		</div>
+		
+		<div class="mb-3">
+			<label for="email" class="form-label">이메일</label>
+			<input type="email" th:field="*{email}" class="form-control">
+		</div>
+		<button type="submit" class="btn btn-primary">정보수정</button>
+	</form>
+</div>
+<script layout:fragment="script" type='text/javascript'>
+document.addEventListener("DOMContentLoaded", function() {
+    var groupSelect = document.getElementById("usergroup");
+    var majorSelect = document.getElementById("major");
+    
+    /*<![CDATA[*/
+    var currentMajor = /*[[${major}]]*/'';
+    /*]]>*/
+
+    function updateMajors(usergroup) {
+        var options = majors[usergroup] || [];
+        majorSelect.innerHTML = ""; // 기존 옵션들 제거
+        options.forEach(function(option) {
+            var optionElement = document.createElement("option");
+            optionElement.value = option.value;
+            optionElement.textContent = option.text;
+            if(option.value === currentMajor) {
+                optionElement.selected = true;
+            }
+            majorSelect.appendChild(optionElement);
+        });
+    }
+
+    groupSelect.addEventListener("change", function() {
+        updateMajors(this.value);
+    });
+
+    updateMajors(groupSelect.value); // 페이지 로딩 시 초기 옵션 설정
+});
+document.addEventListener("DOMContentLoaded", function() {
+    var usernameInput = document.getElementById("username"); // 학번 입력 필드의 ID가 "username"이라고 가정
+    var hoverAlert = document.getElementById("hoverAlert");
+
+    usernameInput.addEventListener("mouseenter", function() {
+        hoverAlert.style.display = 'block'; // 마우스가 입력 필드 위에 있을 때 경고창 보이기
+    });
+
+    usernameInput.addEventListener("mouseleave", function() {
+        hoverAlert.style.display = 'none'; // 마우스가 입력 필드에서 벗어날 때 경고창 숨기기
+    });
+});
+</script>
+</html>

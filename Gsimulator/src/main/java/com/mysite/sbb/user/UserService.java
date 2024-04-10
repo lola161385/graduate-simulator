@@ -36,4 +36,20 @@ public class UserService {
 			throw new DataNotFoundException("siteuser not found");
 		}
 	}
+	
+	public SiteUser getUserInfo(String username) {
+	    return userRepository.findByUsername(username)
+	        .orElseThrow(() -> new DataNotFoundException("User not found"));
+	}
+	
+	public void updateUser(String uname, String email, String enteryear, String usergroup, String major) {
+	    SiteUser user = userRepository.findByUsername(uname)
+	        .orElseThrow(() -> new DataNotFoundException("User not found"));
+	    user.setEmail(email);
+	    user.setEnteryear(enteryear);
+	    user.setUsergroup(usergroup);
+	    user.setMajor(major);
+	    userRepository.save(user); // 변경된 정보를 저장
+	}
+
 }
