@@ -1,14 +1,23 @@
 package com.mysite.sbb.user;
 
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.RestTemplate;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -30,13 +39,19 @@ public class UserController {
 		if (bindingResult.hasErrors()) {
 			return "signup_form";
 		}
-
 		if (!userCreateForm.getPassword1().equals(userCreateForm.getPassword2())) {
 			bindingResult.rejectValue("password2", "passwordInCorrect", "2개의 패스워드가 일치하지 않습니다.");
 			return "signup_form";
 		}
-
+		
 		try {
+			boolean isValidName = validateRealNameWithFlask(userCreateForm.getUsername(),userCreateForm.getRealname());
+			
+            if (!isValidName) {
+                bindingResult.reject("realname", "이름과 학번이 일치하지 않습니다.");
+                return "signup_form";
+            }
+            
 			userService.create(userCreateForm.getUsername(), userCreateForm.getEmail(), userCreateForm.getPassword1(), userCreateForm.getEnteryear(), userCreateForm.getUsergroup(), userCreateForm.getMajor());
 		} catch (DataIntegrityViolationException e) {
 			e.printStackTrace();
@@ -89,6 +104,24 @@ public class UserController {
         }
 
         return "redirect:/user/profile"; // 성공적으로 수정되면 프로필 페이지로 리다이렉트
+    }
+    
+    private boolean validateRealNameWithFlask(String username, String realName) {
+        String urlStr = "http://localhost:7001/get";
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        Map<String, String> request = new HashMap<>();
+        request.put("realName", realName);
+        request.put("userName", username);
+
+        HttpEntity<Map<String, String>> entity = new HttpEntity<>(request, headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(urlStr, HttpMethod.POST, entity, String.class);
+        if (response.getStatusCode() == HttpStatus.OK) {
+            return true;
+        }
+        return false;
     }
 
 }
