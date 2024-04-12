@@ -15,12 +15,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mysite.sbb.sugang.Sugang;
 import com.mysite.sbb.sugang.SugangService;
 import com.mysite.sbb.user.SiteUser;
 import com.mysite.sbb.user.UserRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -95,6 +98,7 @@ public class IndexController {
             sugangs = showService.getSugangsForCurrentUserAndSemester(semester);
         }
         model.addAttribute("sugangs", sugangs); // 모델에 sugangs 추가
+        
         return "main_form";
     }
 
@@ -112,11 +116,17 @@ public class IndexController {
     
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/main/modify/{id}")
-    public String mainModify(Model model, @PathVariable("id") Integer id, Principal principal) {
+    public String mainModify(Model model, @PathVariable("id") Integer id, Principal principal, HttpServletRequest request) {
         Sugang sugang = this.showService.getSugangsForCurrentUser(id);
         if(!sugang.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
+        
+        // 수정 페이지로 이동하기 전의 페이지 URI를 세션에 저장
+        HttpSession session = request.getSession();
+        String referrer = request.getHeader("Referer");
+        session.setAttribute("previousUrl", referrer);
+        
         MainForm mainForm = new MainForm();
         mainForm.setSemester(sugang.getSemester());
         mainForm.setSubjectName(sugang.getSubjectName());
@@ -134,7 +144,7 @@ public class IndexController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/main/modify/{id}")
     public String questionModify(@Valid MainForm mainForm, BindingResult bindingResult, 
-            Principal principal, @PathVariable("id") Integer id) {
+            Principal principal, @PathVariable("id") Integer id, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "main_form";
         }
@@ -144,18 +154,34 @@ public class IndexController {
         }
         
         this.sugangService.modify(sugang, mainForm.getSemester(), mainForm.getSubjectName(), mainForm.getCredit(), mainForm.getGrade(), mainForm.getSubjectType(), mainForm.getCulture());
-        return "redirect:/main/sugang";
+        
+        // 세션에서 이전 페이지 URI 가져오기
+        HttpSession session = request.getSession();
+        String previousUrl = (String) session.getAttribute("previousUrl");
+        session.removeAttribute("previousUrl"); // 세션에서 URI 제거
+        
+        return "redirect:" + (previousUrl != null ? previousUrl : "/main/sugang");
     }
     
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/main/delete/{id}")
-    public String questionDelete(Principal principal, @PathVariable("id") Integer id) {
+    public String questionDelete(Principal principal, @PathVariable("id") Integer id, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        
+    	// 삭제전 이동하기 전의 페이지 URI를 세션에 저장
+        HttpSession session = request.getSession();
+        String referrer = request.getHeader("Referer");
+        session.setAttribute("previousUrl", referrer);
+        
         Sugang sugang = this.sugangService.getSugang(id);
         if (!sugang.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
         this.sugangService.delete(sugang);
-        return "redirect:/main/sugang";
+        
+        String previousUrl = (String) session.getAttribute("previousUrl");
+        session.removeAttribute("previousUrl"); // 세션에서 URI 제거
+        
+        return "redirect:" + (previousUrl != null ? previousUrl : "/main/sugang");
     }
     
     
